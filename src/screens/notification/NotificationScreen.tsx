@@ -1,26 +1,24 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { useTheme } from "@react-navigation/native";
-/**
- * ? Local Imports
- */
-import createStyles from "./NotificationScreen.style";
-import Text from "@shared-components/text-wrapper/TextWrapper";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import PagerView from "react-native-pager-view";
 
-interface ProfileScreenProps {}
-
-const ProfileScreen: React.FC<ProfileScreenProps> = () => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
-
+const NotificationScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text h1 color={colors.text}>
-        Notification
-      </Text>
-    </View>
+    <PagerView style={styles.pagerView} initialPage={0}>
+      <View key="1">
+        <Text>First page</Text>
+      </View>
+      <View key="2">
+        <Text>Second page</Text>
+      </View>
+    </PagerView>
   );
 };
 
-export default ProfileScreen;
+const styles = StyleSheet.create({
+  pagerView: {
+    flex: 1,
+  },
+});
+
+export default NotificationScreen;

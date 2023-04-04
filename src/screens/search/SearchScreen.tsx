@@ -1,26 +1,80 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { useTheme } from "@react-navigation/native";
-/**
- * ? Local Imports
- */
-import createStyles from "./SearchScreen.style";
-import Text from "@shared-components/text-wrapper/TextWrapper";
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { DraggableGrid } from "react-native-draggable-grid";
 
-interface SearchScreenProps {}
+interface MyTestProps {}
 
-const SearchScreen: React.FC<SearchScreenProps> = () => {
-  const theme = useTheme();
-  const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
+interface MyTestState {
+  data: { key: string; name: string }[];
+}
 
-  return (
-    <View style={styles.container}>
-      <Text h1 color={colors.text}>
-        Search
-      </Text>
-    </View>
-  );
-};
+class SearchScreen extends React.Component<MyTestProps, MyTestState> {
+  constructor(props: MyTestProps) {
+    super(props);
+    this.state = {
+      data: [
+        { name: "1", key: "one" },
+        { name: "2", key: "two" },
+        { name: "3", key: "three" },
+        { name: "4", key: "four" },
+        { name: "5", key: "five" },
+        { name: "6", key: "six" },
+        { name: "7", key: "seven" },
+        { name: "8", key: "eight" },
+        { name: "9", key: "night" },
+        { name: "0", key: "zero" },
+      ],
+    };
+  }
+
+  public render_item(item: { name: string; key: string }) {
+    return (
+      <View style={styles.item} key={item.key}>
+        <Text style={styles.item_text}>{item.name}</Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={styles.wrapper}>
+        <DraggableGrid
+          numColumns={4}
+          renderItem={this.render_item}
+          data={this.state.data}
+          onDragRelease={(data) => {
+            this.setState({ data }); // need reset the props data sort after drag release
+          }}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  button: {
+    width: 150,
+    height: 100,
+    backgroundColor: "blue",
+  },
+  wrapper: {
+    paddingTop: 100,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  item: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  item_text: {
+    fontSize: 40,
+    color: "#FFFFFF",
+  },
+});
 
 export default SearchScreen;

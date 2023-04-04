@@ -1,12 +1,12 @@
-import "react-native-gesture-handler";
 import React from "react";
-import { StatusBar, useColorScheme, LogBox } from "react-native";
+import { LogBox, StatusBar, useColorScheme } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 /**
  * ? Local Imports
  */
 import Navigation from "./src/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 LogBox.ignoreAllLogs();
 
@@ -27,9 +27,9 @@ const App = () => {
   }, [scheme, isDarkMode]);
 
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Navigation />
-    </>
+    </GestureHandlerRootView>
   );
 };
 
